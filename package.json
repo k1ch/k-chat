@@ -1,0 +1,33 @@
+{
+  "name": "k-chat",
+  "version": "1.0.0",
+  "description": "A simple chat server!",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bottlejs": "^1.7.2",
+    "colors": "^1.4.0",
+    "compression": "^1.7.4",
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "pm2": "^4.4.0",
+    "serialize-error": "^7.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo 'No test implemented' && exit 1",
+    "pre-start": "npm i",
+    "start": "pm2 start ./config/pm2.config.js --no-daemon",
+    "stop": "pm2 stop ./config/pm2.config.js",
+    "monitor": "pm2 monit",
+    "docker:build": "docker build . -t k-chat",
+    "docker:run": "docker run -i -t -p 3000:3000 k-chat",
+    "development:up": "docker-compose up",
+    "development:down": "docker-compose down"
+  },
+  "keywords": [
+    "k-chat"
+  ],
+  "author": "k1ch",
+  "license": "ISC"
+}

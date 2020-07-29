@@ -1,0 +1,38 @@
+# Docker compose file to setup and run development environment
+
+version: "3.8"
+
+networks:
+  main:
+
+services:
+  k-chat:
+    container_name: k-chat
+    build: ./
+    image: k-chat:dev
+    depends_on: [database]
+    ports:
+      - 3000:3000
+      - 9000:9229
+    volumes:
+      - ./:/app
+    environment:
+      K_CHAT_DB: postgre://postgres:4444@k-chat-db:5432/k-chat
+    networks:
+      main:
+        aliases:
+          - k-chat
+  database:
+    container_name: k-chat-postgreSQL
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 4444
+      POSTGRES_DB: k-chat
+    ports:
+      - 6543:5432
+    networks:
+      main:
+        aliases:
+          - k-chat-db
+
+
