@@ -1,4 +1,0 @@
-{
-  "env": "NODE_ENV",
-  "app_port" : "APP_PORT"
-}

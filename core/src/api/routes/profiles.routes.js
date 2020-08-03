@@ -11,7 +11,7 @@ module.exports.ProfileRoutes = (router) => {
   route.get('/', async (req, res) => {
     const testPromise = new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve('test endpoint is working!!!')
+        resolve('Should return profile!')
       }, 1000);
     });
     const response = await testPromise
@@ -19,4 +19,10 @@ module.exports.ProfileRoutes = (router) => {
       "message": response
     })
   });
+
+  router.ws('/profiles/:profile_id', function(ws, req) {
+    ws.on('message', function(msg) {
+      ws.send(`Recieved this message: ${req.params.chat_id}`)
+    })
+  })
 }

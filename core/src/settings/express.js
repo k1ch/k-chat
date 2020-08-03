@@ -1,30 +1,51 @@
 const express = require('express')
+const app = express();
+require('express-ws')(app)
 const color = require('colors/safe')
 const compression = require('compression');
 const bodyParser = require('body-parser');
+
 const { Utils } = require('../utils');
 const { getRouter } = require('../api');
 
-module.exports.express = () => {
-  const appPort = 3000
-  const app = express()
+
+/**
+ * Setups a express app and 
+ * @retun Express app instance
+ */
+function setupExpress() {
   app.use(bodyParser.json({
     limit: '100kb'
   }));
   app.use(compression())
   app.use(getRouter())
 
+
+  /**
+   * Catch undefined endpoints
+   */
   app.use('*', (req, res) => {
     res.status(404).send({
       message: 'Route is not defined!'
     })
   })
 
+  /**
+   * Catch unexpecte errors
+   */
   app.use((err, req, res, next) => {
     res.status(500).send(`Unexpected error: ${Utils.serializeError(err)}`)
   });
+  return app;
+}
 
-  app.listen(appPort, (err) => {
+/**
+ * App starts to listen on given port
+ * @param {String} - Port number that app will listen to
+ * @return undefined 
+ */
+function startExpressApp(port) {
+  app.listen(port, (err) => {
     if (err) {
       /**
        * @todo call logger and log the error
@@ -32,9 +53,10 @@ module.exports.express = () => {
     }
     console.log(color.green(`
     #########################################
-        App is listening on port: ${appPort}  
+    App is listening on port: ${port}  
     #########################################`))
   })
-
-  return app;
 }
+
+
+module.exports = {setupExpress, startExpressApp}

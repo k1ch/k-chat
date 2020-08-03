@@ -3,7 +3,7 @@ module.exports = {
     name: "k-chat",
     script: "./src/app.js",
     watch: ['src'],
-    watch_delay: 1000,
+    watch_delay: 2000,
     max_memory_restart: "100M",
     instances: 1,
     exec_mode: "cluster",

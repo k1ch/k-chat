@@ -1,0 +1,6 @@
+{
+  "env": "development",
+  "settings": {
+    "app_port": "3000"
+  }
+}
