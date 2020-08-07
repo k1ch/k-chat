@@ -2,5 +2,13 @@
   "env": "NODE_ENV",
   "settings": {
     "app_port": "APP_PORT"
+  },
+  "services": {
+    "rabbitmq": {
+      "address": "RABBITMQ_CONNECTION"
+    }
+  },
+  "database": {
+    "postgresql_connection": "PG_DB_CONNECTION"
   }
 }

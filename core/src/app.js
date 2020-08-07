@@ -8,7 +8,7 @@ const { setupExpress, startExpressApp } = require('./settings/express');
  * Initialize the server
  */
 function initServer() {
-    if (!config.has('settings.app_port')) throw 'App Port if not defined'
+    if (!config.has('settings.app_port')) throw 'App Port is not defined'
     setupExpress()
     startExpressApp(config.get('settings.app_port'))
 }

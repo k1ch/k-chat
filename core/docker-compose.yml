@@ -10,20 +10,21 @@ services:
     container_name: k-chat
     build: ./
     image: k-chat:dev
-    depends_on: [database]
+    depends_on: [postgresql, rabbitmq]
     ports:
       - 3000:3000
       - 9000:9229
     volumes:
       - ./:/app
     environment:
-      K_CHAT_DB: postgre://postgres:4444@k-chat-db:5432/k-chat
+      PG_DB_CONNECTION: postgre://postgres:4444@k-chat-postgresql:5432/k-chat
+      RABBITMQ_CONNECTION: amqp://k-chat-rabbitmq
     networks:
       main:
         aliases:
           - k-chat
-  database:
-    container_name: k-chat-postgreSQL
+  postgresql:
+    container_name: k-chat-postgresql
     image: postgres
     environment:
       POSTGRES_PASSWORD: 4444
@@ -33,6 +34,14 @@ services:
     networks:
       main:
         aliases:
-          - k-chat-db
-
-
+          - k-chat-postgresql
+  rabbitmq:
+    image: rabbitmq
+    container_name: k-chat-rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      main:
+        aliases:
+          - k-chat-rabbitmq
