@@ -13,10 +13,12 @@ services:
     depends_on: [postgresql, rabbitmq]
     ports:
       - 3000:3000
-      - 9000:9229
+      - 9229:9229
     volumes:
       - ./:/app
     environment:
+      NODE_ENV: development
+      APP_PORT: 3000
       PG_DB_CONNECTION: postgre://postgres:4444@k-chat-postgresql:5432/k-chat
       RABBITMQ_CONNECTION: amqp://k-chat-rabbitmq
     networks:

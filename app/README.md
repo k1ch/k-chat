@@ -1,6 +1,6 @@
 # k-chat
 
-This is s simple chat server written in JavaScript
+This is s simple chat server powered by Node.js
 
 ## Development
 
