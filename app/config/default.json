@@ -1,14 +1,30 @@
 {
   "env": "development",
   "settings": {
-    "app_port": "3000"
+    "app_port": "3000",
+    "address": "http://localhost:3000",
+    "client_id": "8bc0c91e3f11df8401475d8b64b1e71c73faf4f4c14aaa2209e6b6e2fc07",
+    "client_secret": "ba34bfd60c5d4ded4ff92f945d497a1d7203c8ef268ef2e9e351c04d8bee2602fd0efa89d2cfe023b476bc8da58e0f7714261d9f7c21f998b3fd54efcf92d816",
+    "salt_length": "32",
+    "temp": "/tmp",
+    "access_token_validity": "2h"
   },
   "services": {
-    "rabbitmq": {
-      "address": ""
+    "aws": {
+      "sslEnabled": false,
+      "access_key": "",
+      "secret_key": "",
+      "s3": {
+        "endpoint": "http://aws:4572",
+        "bucket": "kchat",
+        "region": "us-east-1"
+      }
+    },
+    "rabbitMQ": {
+      "connection": ""
     }
   },
   "database": {
-    "postgresql_connection": ""
+    "postgresql_connection": "postgre://postgres:4444@192.168.0.6:6543/k-chat"
   }
 }

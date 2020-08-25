@@ -10,7 +10,7 @@ services:
     container_name: k-chat
     build: ./
     image: k-chat:dev
-    depends_on: [postgresql, rabbitmq]
+    depends_on: [postgresql, rabbitmq, aws]
     ports:
       - 3000:3000
       - 9229:9229
@@ -47,3 +47,17 @@ services:
       main:
         aliases:
           - k-chat-rabbitmq
+  aws: 
+   container_name: kchat-aws
+   image: localstack/localstack:latest
+   ports:
+    - 4567-4582:4567-4582
+    - 8090:8080
+   environment:
+    DATA_DIR: "/tmp/localstack/data"
+   volumes:
+    - ./storage/localstack:/tmp/localstack
+   networks:
+    main:
+     aliases:
+      - aws

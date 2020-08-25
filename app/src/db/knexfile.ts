@@ -1,4 +1,4 @@
-const Utils = require('../utils')
+import { Utils } from '../utils'
 module.exports = {
   client: 'pg',
   connection: Utils.getConfig('database.postgresql_connection'),

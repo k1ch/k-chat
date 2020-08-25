@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
     name: "k-chat",
-    script: "./build/src/app.js",
+    script: "./build/index.js",
     watch: ['./build'],
     instance_var: "INSTANCE_ID",
     source_map_support: true,

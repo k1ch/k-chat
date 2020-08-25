@@ -1,11 +1,27 @@
 {
   "env": "NODE_ENV",
   "settings": {
-    "app_port": "APP_PORT"
+    "app_port": "APP_PORT",
+    "address": "API_ADDRESS",
+    "client_id": "CLIENT_ID",
+    "client_secret": "CLIENT_SECRET",
+    "salt_length": "SALT_LENGTH",
+    "temp": "TEMP_DIR",
+    "access_token_validity": "ACCESS_TOKEN_VALIDITY"
   },
   "services": {
-    "rabbitmq": {
-      "address": "RABBITMQ_CONNECTION"
+    "aws": {
+      "sslEnabled": "AWS_SSL_ENABLED",
+      "access_key": "AWS_ACCESS_KEY",
+      "secret_key": "AWS_SECRET_KEY",
+      "s3": {
+        "endpoint": "S3_ENDPOINT",
+        "bucket": "S3_BUCKET",
+        "region": "S3_REGION"
+      }
+    },
+    "rabbitMQ": {
+      "connection": "RABBITMQ_CONNECTION"
     }
   },
   "database": {
