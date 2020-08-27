@@ -16,7 +16,7 @@ export class Message extends BaseEntity {
   @Column({
     nullable: true
   })
-  file!: string;
+  file_id!: string;
 
   @Column({
     nullable: true
@@ -27,7 +27,13 @@ export class Message extends BaseEntity {
   content_type!: string;
 
   @CreateDateColumn()
-  timestamp!: string;
+  created_at!: string;
+
+  @Column()
+  seen_at!: string;
+
+  @Column()
+  delivered_at!: string;
 }
 
 export interface MessageCreationRequest {
@@ -43,7 +49,8 @@ export interface MessageCreationRequest {
 export enum ContentType {
   TEXT = 'text',
   IMAGE = 'image',
-  VIDEO = 'video'
+  VIDEO = 'video',
+  AUDIO = 'audio'
 }
 
 export enum SenderOrRecipient {

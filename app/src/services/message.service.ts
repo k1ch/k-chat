@@ -31,7 +31,7 @@ export class MessageService {
         sender: messageRequest.sender,
         recipient: messageRequest.recipient,
         content_type: contentType || messageRequest.content.type,
-        file: file ? file.id : null,
+        file_id: file ? file.id : null,
         text: file ? null : messageRequest.content.text
       } as Message
       const message = await this.messageRepository.create(messagePayload).save()

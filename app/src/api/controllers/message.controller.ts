@@ -49,7 +49,7 @@ export class MessageController {
       async (req, res, next) => {
         try {
           const message = await this.messageService.createMessage(req.body, req.files ? req.files[0] : null)
-          res.status(201).send({ id: message.id, timestamp: message.timestamp })
+          res.status(201).send({ id: message.id, timestamp: message.created_at })
         } catch (err) {
           next(err)
         }

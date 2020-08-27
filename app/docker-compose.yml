@@ -31,6 +31,8 @@ services:
     environment:
       POSTGRES_PASSWORD: 4444
       POSTGRES_DB: k-chat
+    volumes:
+      - ./storage/postgres:/var/lib/postgresql/data
     ports:
       - 6543:5432
     networks:

@@ -22,46 +22,72 @@ export async function up(knex: Knex) {
         table.text('mimetype').notNullable()
         table.text('url').notNullable()
         table.boolean('deleted')
-      }).createTable('chats', (table) => {
+      }).createTable('channels', (table) => {
         table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'))
         table.timestamp('created_at').defaultTo(knex.raw('now()'))
-        table.integer('owner_id').references('id').inTable('users').notNullable().onUpdate('CASCADE').onDelete('CASCADE')
         table.text('name').notNullable()
-      }).createTable('chat_members', (table) => {
-        table.uuid('chat_id').notNullable().references('id').inTable('chats').onUpdate('CASCADE').onDelete('CASCADE')
-        table.integer('user_id').notNullable()
-        table.primary(['chat_id', 'user_id'])
-        table.index(['chat_id', 'user_id'])
+      }).createTable('channel_member_types', (table) => {
+        table.text('type').primary()
+      }).createTable('channel_members', (table) => {
+        table.uuid('channel_id').notNullable().references('id').inTable('channels').onUpdate('CASCADE').onDelete('CASCADE')
+        table.integer('user_id').notNullable().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
+        table.text('type').references('type').inTable('channel_member_types').onUpdate('CASCADE').notNullable().defaultTo('member')
+        table.primary(['channel_id', 'user_id'])
+        table.index(['channel_id', 'user_id'])
+      }).createTable('message_content_types', (table) => {
+        table.text('type').primary()
       }).createTable('messages', (table) => {
         table.specificType('id', 'serial').primary()
-        table.uuid('chat_id').notNullable().references('id').inTable('chats').onUpdate('CASCADE').onDelete('CASCADE')
+        table.uuid('channel_id').references('id').inTable('channels').onUpdate('CASCADE').onDelete('CASCADE')
         table.integer('sender').notNullable().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
-        table.integer('recipient').notNullable().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
+        table.integer('recipient').references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
         table.timestamp('created_at').defaultTo(knex.raw('now()')).notNullable()
         table.timestamp('delivered_at')
         table.timestamp('seen_at')
         table.uuid('file_id').references('id').inTable('files').onUpdate('CASCADE')
+        table.text('content_type').references('type').inTable('message_content_types').onUpdate('CASCADE').notNullable()
         table.text('text')
         table.boolean('deleted').defaultTo(false)
-        table.index(['chat_id'])
+        table.index(['channel_id'])
       })
-    }).then(() => {
-      return knex.raw(`
-        ALTER TABLE messages ADD CONSTRAINT text_file CHECK(text IS NOT NULL OR file_id IS NOT NULL)
+    }).then(async () => {
+      await knex('channel_member_types').insert([{
+        type: 'member'
+      }, {
+        type: 'owner'
+      }, {
+        type: 'admin'
+      }])
+      await knex('message_content_types').insert([{
+        type: 'text'
+      }, {
+        type: 'video'
+      }, {
+        type: 'image'
+      }, {
+        type: 'audio'
+      }])
+      await knex.raw(`
+        ALTER TABLE messages ADD CONSTRAINT content_type_check CHECK((content_type!='text' AND file_id IS NOT NULL) OR (content_type='text' AND text IS NOT NULL));
+        ALTER TABLE messages ADD CONSTRAINT text_file CHECK(text IS NOT NULL OR file_id IS NOT NULL);
+        ALTER TABLE messages ADD CONSTRAINT channel_recipient CHECK((channel_id IS NULL AND recipient IS NOT NULL) OR (channel_id IS NOT NULL AND recipient IS NULL));
       `)
+      return
     })
 };
 
 export async function down(knex: Knex) {
-   await Promise.all([
-    knex.schema.dropTableIfExists('chat_members'),
+  await Promise.all([
+    knex.schema.dropTableIfExists('channel_members'),
     knex.schema.dropTableIfExists('messages')
   ])
 
   await Promise.all([
-    knex.schema.dropTableIfExists('chats'),
+    knex.schema.dropTableIfExists('channels'),
+    knex.schema.dropTableIfExists('message_content_types'),
+    knex.schema.dropTableIfExists('channel_member_types'),
     knex.schema.dropTableIfExists('files'),
     knex.schema.dropTableIfExists('users')
   ])
-  return 
+  return
 };

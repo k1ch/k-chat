@@ -4,7 +4,7 @@
   "description": "A simple chat server!",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'No test implemented' && exit 1",
+    "test": "mocha ./build/**/*.spec.js",
     "pre-start": "npm i && tsc",
     "start": "npm run pre-start && pm2 start ./config/pm2.config.js --no-daemon",
     "stop": "pm2 stop ./config/pm2.config.js",
@@ -32,6 +32,7 @@
     "file-type": "^14.7.1",
     "got": "^11.5.2",
     "istanbul": "^0.4.5",
+    "jsonschema": "^1.2.6",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.4",
     "mocha": "^8.1.1",
