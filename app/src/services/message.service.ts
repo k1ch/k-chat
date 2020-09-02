@@ -1,6 +1,7 @@
 import { Repository, getRepository } from 'typeorm';
 import { Message, MessageCreationRequest, ContentType, SenderOrRecipient } from '../models/message.model';
 import { FileService } from './file.service';
+import { MessageBroker, IExchange } from '../loaders/message-broker';
 
 
 export class MessageService {
@@ -35,6 +36,7 @@ export class MessageService {
         text: file ? null : messageRequest.content.text
       } as Message
       const message = await this.messageRepository.create(messagePayload).save()
+      MessageBroker.publish(IExchange.MESSAGES, JSON.stringify(message));
       return message
     } catch (err) {
       throw {

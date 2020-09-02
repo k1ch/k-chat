@@ -20,7 +20,7 @@
         "region": "S3_REGION"
       }
     },
-    "rabbitMQ": {
+    "rabbitmq": {
       "connection": "RABBITMQ_CONNECTION"
     }
   },
