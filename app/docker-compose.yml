@@ -25,6 +25,25 @@ services:
       main:
         aliases:
           - k-chat
+  k-chat2:
+    container_name: k-chat2
+    build: ./
+    image: k-chat:dev
+    depends_on: [postgresql, rabbitmq, aws]
+    ports:
+      - 3001:3000
+      - 9230:9229
+    volumes:
+      - ./:/app
+    environment:
+      NODE_ENV: development
+      APP_PORT: 3000
+      PG_DB_CONNECTION: postgre://postgres:4444@k-chat-postgresql:5432/k-chat
+      RABBITMQ_CONNECTION: amqp://k-chat-rabbitmq
+    networks:
+      main:
+        aliases:
+          - k-chat
   postgresql:
     container_name: k-chat-postgresql
     image: postgres
