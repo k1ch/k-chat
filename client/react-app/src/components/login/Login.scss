@@ -1,0 +1,27 @@
+.card {
+  &__container {
+    width: 50%;
+    margin: auto;
+    margin-top: 20%;
+  }
+
+  &__header {
+    &-title {
+      text-align: center;
+    }
+    &-subheader {
+      text-align: center;
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__content {
+    &__container {
+      width: 70%;
+      margin: auto;
+      display: grid;
+    }
+  }
+}

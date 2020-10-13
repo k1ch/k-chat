@@ -1,0 +1,20 @@
+@import '../../global.scss';
+
+.logo {
+  &_container {
+    max-width: fit-content;
+    margin: auto;
+    display: table;
+  }
+
+  &_text {
+    vertical-align: middle;
+    display: table-cell;
+    font-family: LogoFont;
+    color: $drak-blue;
+    font-size: 32px;
+    padding: 0% 10% 0% 10%;
+    font-weight: bolder;
+  }
+
+}

@@ -5,5 +5,5 @@ This is a simple chat server and my pet project. Here I test new things while I 
 
 ## File structure:
 
-- [Client](./client): A single page application powered by Angular 
+- [Client](./client/react-app): A single page application powered by React 
 - [App](./app): k-chat server powered by Node.js

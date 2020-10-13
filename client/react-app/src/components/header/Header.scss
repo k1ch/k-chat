@@ -1,0 +1,45 @@
+@import '../../global.scss';
+
+.header {
+  &_container {
+    display: flex;
+    width: 100%;
+    max-height: 8vh;
+    border-bottom: 1px groove gray;
+  }
+
+
+  &_logo {
+    &_container {
+      width: 35%;
+      float: left;
+    }
+
+    &_block {
+      height: 60%;
+    }
+
+    &_clock {
+      height: auto;
+      text-align: center;
+      margin-bottom: 1vh;
+    }
+  }
+
+  &__loginBtn {
+    &__container {
+      width: 100%;
+      float: left;
+    }
+    &__block {
+      float: right;
+      max-height: 100%;
+      max-width: 100%;
+      padding-top: 2vh;
+      padding-right: 2vh ;
+    }
+    &__text {
+      text-decoration: none;
+    }
+  }
+}
