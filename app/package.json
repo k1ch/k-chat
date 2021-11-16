@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "amqplib": "^0.6.0",
-    "aws-sdk": "^2.735.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.19.0",
     "celebrate": "^12.2.0",
     "chai": "^4.2.0",
