@@ -1,7 +1,7 @@
-name: Daily merge (Develop -> QA)
+name: Daily merge (develop -> qa)
 on:
   schedule:
-    - cron: '5 * * * 1-5'
+    - cron: '0 9 * * 1-5'
   workflow_dispatch:
 jobs:
   pull-request:
@@ -16,7 +16,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           source_branch: develop
           target_branch: qa
-          title: 'Daily merge: Develop -> QA'
+          title: 'Daily merge: develop -> qa'
+          body: '**Automated pull request**'
           reviewer: k1ch
           label: daily-merge
           draft: false
