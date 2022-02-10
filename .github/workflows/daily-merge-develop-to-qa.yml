@@ -1,0 +1,27 @@
+name: Daily merge (develop -> qa)
+on:
+  push:
+    branches:
+      - 'develop'
+  schedule:
+    - cron: '0 9 * * 1-5'
+  workflow_dispatch:
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Create a pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: qa
+          base: develop
+          delete-branch: false
+          title: 'Daily merge: develop -> qa'
+          body: '**Automated pull request**'
+          reviewers: k1ch
+          labels: daily-merge
+          draft: false
