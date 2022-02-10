@@ -1,0 +1,21 @@
+name: Daily merge (Develop -> QA)
+on:
+  schedule:
+    - cron: '5 * * * 1-5'
+  workflow_dispatch:
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a pull request
+        uses: devops-infra/action-pull-request@v0.4.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_branch: develop
+          target_branch: qa
+          title: 'Daily merge: Develop -> QA'
+          reviewer: k1ch
+          label: daily-merge
+          draft: false
+          get_diff: true
+          ignore_users: 'dependabot'
