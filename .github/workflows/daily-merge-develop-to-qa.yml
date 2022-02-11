@@ -1,7 +1,7 @@
 name: Daily merge (develop -> qa)
 on:
   schedule:
-    - cron: '0 9 * * 1-5'
+    - cron: '0 22 * * 1-5'
   workflow_dispatch:
 jobs:
   pull-request:
